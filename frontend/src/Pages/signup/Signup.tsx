@@ -20,31 +20,35 @@ const Signup = () => {
   return (
     <div className="flex flex-row h-screen">
       <div className="main w-3/4 md:w-full">
-        <LinkedTreeLogo />
-        <div className="flex flex-col items-center">
-          <h1>Join LinkedTree</h1>
-          <h3>Sign up for free!</h3>
+        <div className="p-4">
+          <LinkedTreeLogo />
         </div>
-        <div className="pl-2 pr-2">
-          <VerticalForm>
-            <GenericFormInput
-              setState={setEmail}
-              type="text"
-              placeholder="Email"
-            />
-            <GenericFormInput
-              setState={setPassword}
-              type="password"
-              placeholder="Password"
-            />
-            <GenericFormInput
-              setState={setConfirmPassword}
-              type="password"
-              placeholder="Confirm Password"
-            />
+        <div className="flex flex-col items-center m-4 ">
+          <div className="flex flex-col items-center">
+            <h1 className="font-extrabold">Join LinkedTree</h1>
+            <h5 className="text-gray-500">Sign up for free!</h5>
+          </div>
+          <div className="pl-2 pr-2 w-full">
+            <VerticalForm>
+              <GenericFormInput
+                setState={setEmail}
+                type="text"
+                placeholder="Email"
+              />
+              <GenericFormInput
+                setState={setPassword}
+                type="password"
+                placeholder="Password"
+              />
+              <GenericFormInput
+                setState={setConfirmPassword}
+                type="password"
+                placeholder="Confirm Password"
+              />
 
-            <SubmitButton text="Log in" onClick={handleLogin} />
-          </VerticalForm>
+              <SubmitButton text="Create account" onClick={handleLogin} />
+            </VerticalForm>
+          </div>
         </div>
       </div>
       <div className="sideArt bg-yellow-600 w-1/2 max-lg:hidden"></div>
