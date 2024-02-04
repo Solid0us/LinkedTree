@@ -9,6 +9,8 @@ import { useAuth } from "../../Context/AuthContext";
 import RequireAuthChildrenComponents from "../../components/auth/RequireAuthChildrenComponents";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import LinkedTreeLogo from "./components/LinkedTreeLogo";
+
 const MainNav = () => {
   const auth = useAuth();
   const [hamburger, setHamburger] = useState(false);
@@ -21,9 +23,7 @@ const MainNav = () => {
   return (
     <div className="navDiv">
       <nav className="flex justify-between items-center absolute top-10 left-1/2 transform -translate-x-1/2  bg-slate-200 rounded-full pl-4 pr-4 h-20 mx-auto w-[80%]">
-        <div>
-          <h1 className="font-sans">LinkedTree</h1>
-        </div>
+        <LinkedTreeLogo />
         <div className="nav-links md:static absolute md:min-h-fit min-h-[60vh] left-0 top-[-9%] md:w-auto w-full flex items-center">
           <ul className="flex md:flex-row flex-col md:items-center md:gap-4 gap-8 w-36 mx-auto">
             <li>
@@ -35,7 +35,16 @@ const MainNav = () => {
           </ul>
         </div>
         <div className="flex items-center gap-6">
-          <button className="bg-slate-400 p-2 rounded-md">Login</button>
+          <a href="/login" className="no-underline">
+            <div className="bg-slate-300 p-3 rounded-md">
+              <span className="text-black font-bold">Log in</span>
+            </div>
+          </a>
+          <a href="/signup" className="no-underline">
+            <div className="bg-black rounded-full  p-3">
+              <span className="text-white">Sign up free</span>
+            </div>
+          </a>
           {hamburger ? (
             <MenuIcon onClick={() => setHamburger((prevState) => !prevState)} />
           ) : (

@@ -14,6 +14,7 @@ import Admin from "./Pages/admin/Admin";
 import Login from "./Pages/login/Login";
 import { CookiesProvider, useCookies } from "react-cookie";
 import RequireAuthRouters from "./components/auth/RequireAuthRouters";
+import Signup from "./Pages/signup/Signup";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/admin" element={<Admin />} />
             </Route>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </CookiesProvider>
       </AuthProvider>
