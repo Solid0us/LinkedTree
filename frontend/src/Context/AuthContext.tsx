@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await UserAuth.logout();
       setUser(null);
-      navigate("/login");
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

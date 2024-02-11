@@ -23,7 +23,7 @@ function App() {
         <CookiesProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route element={<RequireAuthRouters roles={["ADMIN"]} />}>
+            <Route element={<RequireAuthRouters roles={["ADMIN, USER"]} />}>
               <Route path="/admin" element={<Admin />} />
             </Route>
             <Route path="/login" element={<Login />} />

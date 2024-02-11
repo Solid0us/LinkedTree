@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon src/server.ts"
+    "start:dev": "nodemon src/server.ts",
+    "postinstall": "prisma generate",
+    "build": "tsc",
+    "vercel-build": "echo hello"
   },
   "author": "Bruce Lee",
   "license": "ISC",

@@ -47,7 +47,13 @@ const MainNav = () => {
             </span>
           </div>
         </a>
-        {!auth.user && (
+        {auth.user ? (
+          <a href="/logout" className="no-underline">
+            <div className="bg-black rounded-full  p-3">
+              <span className="text-white">Logout</span>
+            </div>
+          </a>
+        ) : (
           <a href="/signup" className="no-underline">
             <div className="bg-black rounded-full  p-3">
               <span className="text-white">Sign up free</span>
