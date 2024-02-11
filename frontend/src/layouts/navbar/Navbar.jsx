@@ -15,6 +15,7 @@ const MainNav = () => {
   const logout = () => {
     auth.logout();
   };
+  console.log(auth.user);
   return (
     <nav className="flex justify-between items-center absolute top-10 left-1/2 transform -translate-x-1/2  bg-slate-200 rounded-full pl-4 pr-4 h-20 mx-auto w-[95%]">
       <div className="nav-links md:static absolute md:min-h-fit min-h-[60vh] left-0 top-[-9%] md:w-auto w-full flex items-center">
@@ -48,7 +49,7 @@ const MainNav = () => {
           </div>
         </a>
         {auth.user ? (
-          <a href="/logout" className="no-underline">
+          <a href="/signout " className="no-underline">
             <div className="bg-black rounded-full  p-3">
               <span className="text-white">Logout</span>
             </div>

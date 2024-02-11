@@ -8,10 +8,6 @@ type Props = {
 const RequireAuthRouters = ({ roles }: Props) => {
   const auth = useAuth();
   const location = useLocation();
-  console.log(
-    `User is logged in: ${auth.loggedIn}. Loading user: ${auth.loadingUser}`
-  );
-  console.log("Require Auth:", auth.user);
   if (!auth.loadingUser) {
     if (auth.user) {
       if (roles.includes(auth.user.role)) {

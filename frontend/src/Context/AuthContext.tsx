@@ -1,5 +1,5 @@
 import { useState, useContext, createContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import UserAuth from "../Services/auth";
 
 export const AuthContext = createContext(null);
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     confirm_password: string
   ) => {
     try {
-      await UserAuth.signup({
+      const res = await UserAuth.signup({
         username,
         first_name,
         last_name,
@@ -27,7 +27,9 @@ export const AuthProvider = ({ children }) => {
         password,
         confirm_password,
       });
-      navigate("/");
+      setUser(res.data.user);
+      navigate("/admin", { replace: true });
+      navigate(0);
     } catch (err) {
       alert("Could not sign up.");
       console.log(err);
@@ -41,7 +43,8 @@ export const AuthProvider = ({ children }) => {
         password,
       });
       setUser(res.data.user);
-      navigate("/", { replace: true });
+      navigate("/admin", { replace: true });
+      navigate(0);
     } catch (err) {
       console.log(err);
       alert("Incorrect credentials");
@@ -52,7 +55,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await UserAuth.logout();
       setUser(null);
-      navigate("/");
+      navigate("/", { replace: true });
+      navigate(0);
     } catch (err) {
       console.log(err);
     }

@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
-import UserAuth from "../../Services/auth";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import SubmitButton from "../../components/buttons/SubmitButton";
 import VerticalForm from "../../components/form/VerticalForm";
@@ -9,6 +7,8 @@ import LinkedTreeLogo from "../../layouts/navbar/components/LinkedTreeLogo";
 import GenericFormInput from "../../components/form/inputs/GenericFormInput";
 import SignupFigureLink from "./components/SignupFigureLink";
 import ForestTwoToneIcon from "@mui/icons-material/ForestTwoTone";
+
+console.log(import.meta.env);
 
 const Signup = () => {
   const params = new URLSearchParams(document.location.search);
@@ -19,9 +19,8 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState("");
   const auth = useAuth();
-  const navigate = useNavigate();
 
   const handleSignup = async () => {
     await auth.signup(
@@ -33,6 +32,7 @@ const Signup = () => {
       confirmPassword
     );
   };
+
   return (
     <div className="flex flex-row h-screen max-lg:flex-col">
       <div className="w-3/4 max-xl:w-full">
