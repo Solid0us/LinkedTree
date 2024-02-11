@@ -120,7 +120,12 @@ export const login = catchAsync(
 export const signout = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     res
-      .clearCookie("token", { path: "/", httpOnly: true, secure: true })
+      .clearCookie("token", {
+        path: "/",
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
       .json({ message: "You have successfully logged out!" });
   }
 );
