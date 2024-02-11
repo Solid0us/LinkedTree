@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import app from "./app";
+import app from "../src/app";
 
 const {
   ACCESS_TOKEN_SECRET,
