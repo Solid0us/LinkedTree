@@ -10,6 +10,30 @@ export const AuthProvider = ({ children }) => {
   const [loadingUser, setLoadingUser] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const signup = async (
+    username: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    password: string,
+    confirm_password: string
+  ) => {
+    try {
+      await UserAuth.signup({
+        username,
+        first_name,
+        last_name,
+        email,
+        password,
+        confirm_password,
+      });
+      navigate("/");
+    } catch (err) {
+      alert("Could not sign up.");
+      console.log(err);
+    }
+  };
+
   const login = async (email: string, password: string) => {
     try {
       const res = await UserAuth.login({
@@ -39,6 +63,7 @@ export const AuthProvider = ({ children }) => {
       navigate("/login");
     }
   };
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -61,6 +86,7 @@ export const AuthProvider = ({ children }) => {
         user,
         login,
         logout,
+        signup,
         redirectLogin,
         loggedIn,
         loadingUser,

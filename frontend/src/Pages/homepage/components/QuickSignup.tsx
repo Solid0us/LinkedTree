@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const QuickSignup = () => {
   const [focus, setFocus] = useState(false);
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
   const handleFocus = () => {
     setFocus((prevState) => !prevState);
   };
-  const handleSubmit = (e) => {
-    console.log("submitted");
-    e.preventDefault();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    navigate(`/signup?username=${username}`);
   };
   return (
     <form className="text-neutral-950">
@@ -25,12 +33,13 @@ const QuickSignup = () => {
               placeholder="yourname"
               onFocus={handleFocus}
               onBlur={handleFocus}
+              onChange={(e) => handleChange(e)}
             ></input>
           </div>
         </div>
         <button
           className="bg-linktre-dark-pink rounded-full p-3 hover:bg-fuchsia-300"
-          onClick={(e) => handleSubmit(e)}
+          onClick={handleSubmit}
         >
           Claim your Linkedtree
         </button>

@@ -39,7 +39,14 @@ const createHttpOnlyCookie = (
 
 export const signup = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, confirmPassword } = req.body;
+    const {
+      username,
+      email,
+      password,
+      first_name,
+      last_name,
+      confirmPassword,
+    } = req.body;
     const existingEmail = await prisma.user.findUnique({
       where: {
         email,
@@ -51,7 +58,9 @@ export const signup = catchAsync(
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = await prisma.user.create({
       data: {
-        name,
+        username,
+        first_name,
+        last_name,
         email,
         password: hashedPassword,
       },
@@ -59,7 +68,7 @@ export const signup = catchAsync(
 
     const token = await signToken(
       String(newUser.id),
-      newUser.name,
+      newUser.username,
       newUser.role
     );
     createHttpOnlyCookie(res, "token", token);
@@ -69,7 +78,7 @@ export const signup = catchAsync(
       token,
       message: {
         user: {
-          name: newUser.name,
+          username: newUser.username,
           email: newUser.email,
           role: newUser.role,
         },
@@ -93,12 +102,12 @@ export const login = catchAsync(
     if (!user || !correctPassword) {
       return next(new AppError("Incorrect email or password.", 400));
     }
-    const token = await signToken(String(user.id), user.name, user.role);
+    const token = await signToken(String(user.id), user.username, user.role);
     createHttpOnlyCookie(res, "token", token);
     res.status(200).json({
       status: "success",
       user: {
-        name: user.name,
+        username: user.username,
         email: user.email,
         role: user.role,
       },
@@ -143,7 +152,7 @@ export const protect = catchAsync(
         },
         select: {
           id: true,
-          name: true,
+          username: true,
           email: true,
           role: true,
         },

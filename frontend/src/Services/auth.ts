@@ -5,6 +5,10 @@ class UserAuth {
     return http.post("/v1/auth");
   }
 
+  signup(data: {}) {
+    return http.post("/v1/auth/signup", data);
+  }
+
   login(data: {}) {
     return http.post("/v1/auth/login", data);
   }

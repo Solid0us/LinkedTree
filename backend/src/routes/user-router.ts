@@ -16,10 +16,6 @@ userRouter.post("/login", authController.login);
 // .delete(userController.deleteUser)
 // .patch(userController.updateUser);
 
-userRouter.route("/").get((req, res, next) => {
-  res.json({
-    message: "You have reached the user endpoint",
-  });
-});
+userRouter.route("/").get(userController.getAllUsers);
 
 export default userRouter;

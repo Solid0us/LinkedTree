@@ -2,12 +2,14 @@ type GenericFormInputProps = {
   type: React.HTMLInputTypeAttribute;
   placeholder: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
+  value: string;
 };
 
 const GenericFormInput = ({
   type,
   placeholder,
   setState,
+  value,
 }: GenericFormInputProps) => {
   return (
     <input
@@ -16,6 +18,7 @@ const GenericFormInput = ({
       type={type}
       onChange={(e) => setState(e.target.value)}
       placeholder={placeholder}
+      value={value}
     />
   );
 };
