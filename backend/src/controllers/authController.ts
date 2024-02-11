@@ -33,6 +33,7 @@ const createHttpOnlyCookie = (
     expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
     secure: true,
     path: "/",
+    SameSite: "none",
     httpOnly: true,
   };
   res.cookie(tokenName, jwtToken, cookieOptions);
