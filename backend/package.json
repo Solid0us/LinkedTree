@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/server.js",
-    "start:dev": "nodemon api/server.ts",
+    "start:dev": "nodemon src/server.ts",
     "postinstall": "prisma generate",
     "build": "tsc",
     "vercel-build": "echo Building"

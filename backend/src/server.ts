@@ -4,8 +4,6 @@ import app from "./app";
 
 const PORT = process.env.PORT || 8080;
 
-console.log("Hello");
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
