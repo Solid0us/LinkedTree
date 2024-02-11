@@ -29,14 +29,13 @@ const createHttpOnlyCookie = (
   tokenName: string,
   jwtToken: string
 ) => {
-  const cookieOptions = {
-    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-    secure: true,
-    path: "/",
-    SameSite: "none",
+  res.cookie(tokenName, jwtToken, {
+    sameSite: "none",
     httpOnly: true,
-  };
-  res.cookie(tokenName, jwtToken, cookieOptions);
+    path: "/",
+    secure: true,
+    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+  });
 };
 
 export const signup = catchAsync(
