@@ -8,35 +8,41 @@ import AnchorLink from "./components/AnchorLink";
 
 const MainNav = () => {
   const auth = useAuth();
-  const [hamburger, setHamburger] = useState(false);
+  const [hamburger, setHamburger] = useState(true);
   const toggleHamburger = (e) => {
     e.target.name = e.target.name === "menu" ? "close" : "menu";
   };
   const logout = () => {
     auth.logout();
   };
-  console.log(auth.user);
+  const [hide, setHide] = useState(true);
   return (
-    <nav className="flex justify-between items-center absolute top-10 left-1/2 transform -translate-x-1/2  bg-slate-200 rounded-full pl-4 pr-4 h-20 mx-auto w-[95%]">
-      <div className="nav-links md:static absolute md:min-h-fit min-h-[60vh] left-0 top-[-9%] md:w-auto w-full flex items-center">
+    <nav
+      className="flex justify-between items-center fixed top-10 left-1/2 transform -translate-x-1/2  bg-slate-200 rounded-full pl-4 pr-4 h-20 mx-auto w-[95%]"
+      onClick={() => setHide((prevState) => !prevState)}
+    >
+      {/* <div className="nav-links md:static relative md:min-h-fit min-h-[60vh] left-0 top-[-9%] md:w-auto w-full flex items-center"> */}
+      <div className="md:px-10 py-4 px-7 md:flex justify-between items-center">
         <a href="/" className="no-underline text-black">
           <LinkedTreeLogo />
         </a>
-        <ul className="flex lg:flex-row flex-col md:items-center text-center md:gap-4 gap-8 mx-auto pt-3 ">
-          <li>
+        <ul
+          className={`absolute top-full right-0 w-screen overflow-visible text-3xl bg-green-400 underline underline-offset-8 ${
+            hide ? "invisible translate-x-full" : "translate-x-0"
+          } 
+         lg:flex lg:flex-row lg:relative lg:bg-slate-200 lg:w-full lg:no-underline lg:text-base lg:translate-x-0 transition-all duration-500 ease-in-out`}
+        >
+          <li className="pl-5">
             <AnchorLink href="/" text="Templates" />
           </li>
-          <li>
+          <li className="pl-5">
             <AnchorLink href="/" text="Discover" />
           </li>
-          <li>
+          <li className="pl-5">
             <AnchorLink href="/" text="Pricing" />
           </li>
-          <li>
+          <li className="pl-5">
             <AnchorLink href="/" text="Learn" />
-          </li>
-          <li>
-            <AnchorLink href="/admin" text="Admin" />
           </li>
         </ul>
       </div>
@@ -63,12 +69,12 @@ const MainNav = () => {
         )}
         {hamburger ? (
           <MenuIcon
-            className="lg:hidden"
+            className="hidden"
             onClick={() => setHamburger((prevState) => !prevState)}
           />
         ) : (
           <CloseIcon
-            className="lg:hidden"
+            className="hidden"
             onClick={() => setHamburger((prevState) => !prevState)}
           />
         )}

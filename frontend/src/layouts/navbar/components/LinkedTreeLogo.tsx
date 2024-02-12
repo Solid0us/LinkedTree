@@ -2,8 +2,8 @@ import ForestTwoToneIcon from "@mui/icons-material/ForestTwoTone";
 
 const LinkedTreeLogo = () => {
   return (
-    <div className="flex flex-wrap items-center gap-1">
-      <h1 className="font-sans max-2xl:hidden">LinkedTree</h1>
+    <div className="flex flex-row items-center gap-1">
+      <h1 className="font-sans hidden lg:inline-block">LinkedTree</h1>
       <ForestTwoToneIcon fontSize="large" color="success" />
     </div>
   );

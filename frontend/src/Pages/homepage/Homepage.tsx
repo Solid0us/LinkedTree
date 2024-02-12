@@ -12,8 +12,8 @@ const HomePage = () => {
     <>
       <MainNav />
       <div className="bg-linktr-dark-green text-linktr-lime min-h-screen flex flex-col pt-96 items-center">
-        <div className="flex flex-wrap gap-56">
-          <div className="flex flex-col max-w-2xl">
+        <div className="flex flex-wrap gap-56 justify-center">
+          <div className="flex flex-wrap max-w-2xl justify-center">
             <IntroText />
             <QuickSignup />
           </div>
