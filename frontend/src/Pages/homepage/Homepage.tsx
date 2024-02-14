@@ -11,15 +11,13 @@ const HomePage = () => {
   return (
     <>
       <MainNav />
-      <div className="bg-linktr-dark-green text-linktr-lime min-h-screen flex flex-col pt-96 items-center">
-        <div className="flex flex-wrap gap-56 justify-center">
+      <div className="bg-linktr-dark-green text-linktr-lime min-h-screen flex flex-col pl-6 pr-pl-6 pt-40 lg:pt-52 xl:pt-96 items-center">
+        <div className="flex flex-wrap gap-x-56 gap-y-20 justify-center">
           <div className="flex flex-wrap max-w-2xl justify-center">
             <IntroText />
             <QuickSignup />
           </div>
-          <div className="flex flex-wrap items-center">
-            <Figure />
-          </div>
+          <Figure />
         </div>
       </div>
     </>

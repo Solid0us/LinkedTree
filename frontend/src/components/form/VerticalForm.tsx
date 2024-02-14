@@ -3,7 +3,7 @@ type Props = {
 };
 const VerticalForm = ({ children }: Props) => {
   return (
-    <div className="flex flex-col text-center items-center mr-auto ml-auto mt-10 p-2 max-w-xl">
+    <div className="flex flex-col text-center items-center mr-auto ml-auto mt-10 p-2 w-4/6">
       {children}
     </div>
   );
