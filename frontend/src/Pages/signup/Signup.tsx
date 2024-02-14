@@ -54,20 +54,6 @@ const Signup = () => {
                 placeholder="Username"
                 value={username}
               />
-              <div className="flex flex-row justify-between">
-                <GenericFormInput
-                  setState={setFirstName}
-                  type="text"
-                  placeholder="First Name"
-                  value={firstName}
-                />
-                <GenericFormInput
-                  setState={setLastName}
-                  type="text"
-                  placeholder="Last Name"
-                  value={lastName}
-                />
-              </div>
               <GenericFormInput
                 setState={setEmail}
                 type="text"

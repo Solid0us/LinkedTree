@@ -40,14 +40,7 @@ const createHttpOnlyCookie = (
 
 export const signup = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const {
-      username,
-      email,
-      password,
-      first_name,
-      last_name,
-      confirmPassword,
-    } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
     const existingEmail = await prisma.user.findUnique({
       where: {
         email,
@@ -60,8 +53,6 @@ export const signup = catchAsync(
     const newUser = await prisma.user.create({
       data: {
         username,
-        first_name,
-        last_name,
         email,
         password: hashedPassword,
       },

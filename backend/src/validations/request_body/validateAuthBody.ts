@@ -5,16 +5,6 @@ const authUsername = z.string({
   invalid_type_error: "Username must be a string.",
 });
 
-const authFirstName = z.string({
-  required_error: "FirstName cannot be empty.",
-  invalid_type_error: "FirstName must be a string.",
-});
-
-const authLastName = z.string({
-  required_error: "LastName cannot be empty.",
-  invalid_type_error: "LastName must be a string.",
-});
-
 const authEmail = z
   .string({
     required_error: "Email cannot be empty.",
@@ -40,8 +30,6 @@ export const validateSignupBody = z.object({
   body: z
     .object({
       username: authUsername,
-      first_name: authFirstName,
-      last_name: authLastName,
       email: authEmail,
       password: authSignupPassword,
       confirm_password: authConfirmPassword,

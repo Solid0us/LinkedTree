@@ -29,7 +29,7 @@ const Login = () => {
         </a>
         <div className="flex flex-col items-center m-4">
           <div className="flex flex-col items-center">
-            <h1 className="font-extrabold">Welcome Back</h1>
+            <h1 className="font-extrabold">Welcome back</h1>
             <h5 className="text-gray-500">Log in to your LinkedTree</h5>
           </div>
           <VerticalForm>
