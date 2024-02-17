@@ -47,8 +47,8 @@ const Admin = () => {
       <NavBarSkeleton>
         <LinkedTreeLogo />
       </NavBarSkeleton>
-      <div className="flex flex-row h-screen">
-        <div className="bg-gray-100 w-2/3 border-r pl-10 pr-10 pt-28">
+      <div className="flex flex-col md:flex-row h-screen">
+        <div className="bg-gray-100 w-full md:w-2/3 border-r pl-5 pr-5 lg:pl-10 lg:pr-10 pt-28">
           {addLinkMenu ? (
             <div className={`w-full h-64 rounded-xl animate-pop-in bg-gray-50`}>
               <div className="flex justify-end p-1">
@@ -61,7 +61,7 @@ const Admin = () => {
                 </div>
               </div>
               <h2 className="font-bold">Enter URL</h2>
-              <div className="flex flex-row gap-4 pl-10 pr-10">
+              <div className="flex flex-row gap-4 pl-5 pr-5">
                 <input
                   className="bg-gray-200 rounded-md w-full caret-black p-2"
                   placeholder="URL"
@@ -105,7 +105,7 @@ const Admin = () => {
             })}
           </div>
         </div>
-        <div className="bg-gray-100 w-1/3"></div>
+        <div className="bg-gray-100 hidden md:w-1/3"></div>
       </div>
     </>
   );
