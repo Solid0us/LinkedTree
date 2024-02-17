@@ -10,6 +10,13 @@ interface Payload extends JwtPayload {
   id: string;
 }
 
+export interface VerifiedUser {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+}
+
 export enum Role {
   USER = "USER",
   ADMIN = "ADMIN",
@@ -131,6 +138,8 @@ export const protect = catchAsync(
       req.headers.authorization.startsWith("Bearer")
     ) {
       token = req.headers.authorization.split(" ")[1];
+    } else if (req.headers.cookie) {
+      token = req.headers.cookie.split("=")[1];
     }
 
     if (!token) {
@@ -142,6 +151,7 @@ export const protect = catchAsync(
     // 1. Verify token, 2. Check if user still exists, 3. Check if password has changed
 
     jwt.verify(token, ACCESS_TOKEN_SECRET, async (err, payload) => {
+      console.log(req.headers);
       if (err) return next(new AppError("Invalid tokens", 401));
       existingUser = await prisma.user.findUnique({
         where: {

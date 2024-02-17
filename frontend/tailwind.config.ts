@@ -18,6 +18,15 @@ export default {
         "400": "400",
         "500": "500",
       },
+      keyframes: {
+        "pop-in": {
+          "0%": { transform: "scale(.90)", backgroundColor: "#C571F3" },
+          "100%": { transform: "scale(1)", backgroundColor: "#FFFFFF" },
+        },
+      },
+      animation: {
+        "pop-in": "pop-in 100ms linear ",
+      },
     },
   },
   plugins: [],

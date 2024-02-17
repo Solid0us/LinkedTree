@@ -5,6 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import LinkedTreeLogo from "./components/LinkedTreeLogo";
 import AnchorLink from "./components/AnchorLink";
+import NavBarSkeleton from "./components/NavBarSkeleton";
 
 const MainNav = () => {
   const auth = useAuth();
@@ -22,14 +23,14 @@ const MainNav = () => {
   };
   return (
     <>
-      <nav className="flex justify-between items-center fixed top-4 left-1/2 transform -translate-x-1/2 bg-slate-200 rounded-full pl-4 pr-4 h-20 mx-auto w-[95%] z-200">
+      <NavBarSkeleton>
         <div className="md:px-10  md:flex justify-between items-center">
           <a href="/" className="no-underline text-black">
             <LinkedTreeLogo />
           </a>
           <ul
             className={`hidden lg:visible
-         lg:flex lg:flex-row lg:relative lg:bg-slate-200 lg:w-full lg:no-underline lg:text-base lg:translate-x-0 transition-all duration-500 ease-in-out`}
+         lg:flex lg:flex-row lg:relative lg:bg-white lg:w-full lg:no-underline lg:text-base lg:translate-x-0 transition-all duration-500 ease-in-out`}
           >
             <li className="pl-5">
               <AnchorLink href="/" text="Templates" />
@@ -77,7 +78,7 @@ const MainNav = () => {
             )}
           </div>
         </div>
-      </nav>
+      </NavBarSkeleton>
 
       <div
         className={`fixed top-0 right-0 bg-green-400 w-screen h-screen ${
