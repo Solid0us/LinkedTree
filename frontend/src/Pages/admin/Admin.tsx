@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import NavBarSkeleton from "../../layouts/navbar/components/NavBarSkeleton";
 import LinkedTreeLogo from "../../layouts/navbar/components/LinkedTreeLogo";
@@ -17,6 +17,17 @@ const Admin = () => {
     link: "",
   });
   const [linkList, setLinkList] = useState<HasLinks[]>([]);
+
+  const dragLink = useRef<number>(0);
+  const draggedOverLink = useRef<number>(0);
+
+  const handleDragSort = () => {
+    const linkClone = [...linkList];
+    const temp = linkClone[dragLink.current];
+    linkClone[dragLink.current] = linkClone[draggedOverLink.current];
+    linkClone[draggedOverLink.current] = temp;
+    setLinkList(linkClone);
+  };
   const handleAddLink = async () => {
     try {
       await linksServices.createLink(linkForm);
@@ -100,11 +111,16 @@ const Admin = () => {
                 addLinkMenu && "blur-2xs"
               }`}
             >
-              {linkList.toReversed().map((link) => {
+              {linkList.toReversed().map((link, idx) => {
                 return (
                   <div
+                    key={idx}
                     className="w-full h-32 bg-white rounded-2xl mt-3"
-                    draggable={true}
+                    draggable
+                    onDragStart={() => (dragLink.current = idx)}
+                    onDragEnter={() => (draggedOverLink.current = idx)}
+                    onDragEnd={handleDragSort}
+                    onDragOver={(e) => e.preventDefault()}
                   >
                     {link.link}
                   </div>
