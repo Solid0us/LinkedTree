@@ -5,8 +5,25 @@ import LinkedTreeLogo from "../../layouts/navbar/components/LinkedTreeLogo";
 import AddIcon from "@mui/icons-material/Add";
 import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 import linksServices from "../../Services/links.services";
+import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  closestCorners,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
+import LinkElement from "./components/LinkElement";
 
 interface HasLinks {
+  id: number;
   link: string;
 }
 
@@ -18,16 +35,6 @@ const Admin = () => {
   });
   const [linkList, setLinkList] = useState<HasLinks[]>([]);
 
-  const dragLink = useRef<number>(0);
-  const draggedOverLink = useRef<number>(0);
-
-  const handleDragSort = () => {
-    const linkClone = [...linkList];
-    const temp = linkClone[dragLink.current];
-    linkClone[dragLink.current] = linkClone[draggedOverLink.current];
-    linkClone[draggedOverLink.current] = temp;
-    setLinkList(linkClone);
-  };
   const handleAddLink = async () => {
     try {
       await linksServices.createLink(linkForm);
@@ -48,6 +55,30 @@ const Admin = () => {
       console.log(err);
     }
   };
+
+  const getLinkPos = (id: number) =>
+    linkList.findIndex((link) => link.id === id);
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id === over.id) return;
+
+    setLinkList((links) => {
+      const originalPos = getLinkPos(active.id);
+      const newPos = getLinkPos(over.id);
+
+      return arrayMove(linkList, originalPos, newPos);
+    });
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   useEffect(() => {
     getAllLinks();
@@ -111,21 +142,20 @@ const Admin = () => {
                 addLinkMenu && "blur-2xs"
               }`}
             >
-              {linkList.toReversed().map((link, idx) => {
-                return (
-                  <div
-                    key={idx}
-                    className="w-full h-32 bg-white rounded-2xl mt-3"
-                    draggable
-                    onDragStart={() => (dragLink.current = idx)}
-                    onDragEnter={() => (draggedOverLink.current = idx)}
-                    onDragEnd={handleDragSort}
-                    onDragOver={(e) => e.preventDefault()}
-                  >
-                    {link.link}
-                  </div>
-                );
-              })}
+              <DndContext
+                onDragEnd={handleDragEnd}
+                collisionDetection={closestCorners}
+                sensors={sensors}
+              >
+                <SortableContext
+                  items={linkList as []}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {linkList.toReversed().map((link) => {
+                    return <LinkElement link={link} id={link.id} />;
+                  })}
+                </SortableContext>
+              </DndContext>
             </div>
           </div>
         </div>
