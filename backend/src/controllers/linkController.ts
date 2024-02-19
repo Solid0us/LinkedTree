@@ -10,6 +10,14 @@ interface CreateLinkBody extends Request {
   };
 }
 
+interface UpdateLinkBody extends Request {
+  body: {
+    id: number;
+    link: string;
+    list_order: number;
+  };
+}
+
 export const getAllLinksByUserID = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const links = await prisma.links.findMany({
@@ -37,6 +45,25 @@ export const createLink = catchAsync(
       status: "success",
       message: "Link has been created",
       data: createdLink.link,
+    });
+  }
+);
+
+export const updateLink = catchAsync(
+  async (req: UpdateLinkBody, res: Response, next: NextFunction) => {
+    const { id, link, list_order } = req.body;
+    const updateLink = await prisma.links.update({
+      where: {
+        id,
+      },
+      data: {
+        list_order,
+        link,
+      },
+    });
+    res.status(200).json({
+      status: "success",
+      data: updateLink,
     });
   }
 );

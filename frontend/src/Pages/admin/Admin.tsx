@@ -25,6 +25,7 @@ import LinkElement from "./components/LinkElement";
 interface HasLinks {
   id: number;
   link: string;
+  list_order: number;
 }
 
 const Admin = () => {
@@ -56,18 +57,15 @@ const Admin = () => {
     }
   };
 
-  const getLinkPos = (id: number) =>
-    linkList.findIndex((link) => link.id === id);
+  const getLinkPos = (list_order: number) =>
+    linkList.findIndex((link) => link.list_order === list_order);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-
-    if (active.id === over.id) return;
-
+    if (active === over) return;
     setLinkList((links) => {
       const originalPos = getLinkPos(active.id);
       const newPos = getLinkPos(over.id);
-
       return arrayMove(linkList, originalPos, newPos);
     });
   };
@@ -83,7 +81,6 @@ const Admin = () => {
   useEffect(() => {
     getAllLinks();
   }, []);
-
   return (
     <>
       <NavBarSkeleton>
@@ -151,9 +148,13 @@ const Admin = () => {
                   items={linkList as []}
                   strategy={verticalListSortingStrategy}
                 >
-                  {linkList.toReversed().map((link) => {
-                    return <LinkElement link={link} id={link.id} />;
-                  })}
+                  {linkList
+                    .sort((a, b) => a.list_order - b.list_order)
+                    .map((link) => {
+                      return (
+                        <LinkElement link={link} id={link.id} key={link.id} />
+                      );
+                    })}
                 </SortableContext>
               </DndContext>
             </div>
