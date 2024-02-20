@@ -9,6 +9,7 @@ dotenv.config();
 export const checkLinkExistPerUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     console.log(req.body.user);
+    console.log(req.body);
     const existLinkPerUser = await prisma.links.findUnique({
       where: {
         id: req.body.id,

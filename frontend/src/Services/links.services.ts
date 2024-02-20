@@ -8,6 +8,10 @@ class LinksDataService {
   createLink(data: { [key: string]: any }) {
     return http.post(`/v1/links`, data);
   }
+
+  updateLink(data: { [key: string]: any }) {
+    return http.patch(`/v1/links/${data.id}`, data);
+  }
 }
 
 export default new LinksDataService();

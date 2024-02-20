@@ -7,9 +7,11 @@ import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 import linksServices from "../../Services/links.services";
 import {
   DndContext,
+  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   TouchSensor,
+  UniqueIdentifier,
   closestCorners,
   useSensor,
   useSensors,
@@ -21,6 +23,8 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import LinkElement from "./components/LinkElement";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 interface HasLinks {
   id: number;
@@ -31,6 +35,8 @@ interface HasLinks {
 const Admin = () => {
   const auth = useAuth();
   const [addLinkMenu, setAddLinkMenu] = useState(false);
+  const [mobileDrawer, setMobileDrawer] = useState(false);
+
   const [linkForm, setLinkForm] = useState({
     link: "",
   });
@@ -51,36 +57,40 @@ const Admin = () => {
     try {
       const links = (await linksServices.getLinksById<HasLinks[]>(auth.user.id))
         .data.data;
-      setLinkList(links);
+      setLinkList(links.sort((a, b) => a.list_order - b.list_order));
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getLinkPos = (list_order: number) =>
-    linkList.findIndex((link) => link.list_order === list_order);
-
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (active === over) return;
-    setLinkList((links) => {
-      const originalPos = getLinkPos(active.id);
-      const newPos = getLinkPos(over.id);
-      return arrayMove(linkList, originalPos, newPos);
-    });
+  const renumberOrder = (array: HasLinks[]) => {
+    const arrayCopy = array;
+    for (let i = 0; i < array.length; i++) {
+      arrayCopy[i].list_order = i + 1;
+    }
+    return arrayCopy;
   };
 
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(TouchSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
+  const getLinkPos = (id: UniqueIdentifier) => {
+    return linkList.findIndex((link) => link.id === id);
+  };
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (active.id === over.id) return;
+    const originalPos = getLinkPos(active.id);
+    const newPos = getLinkPos(over.id);
+    const newArray = arrayMove(linkList, originalPos, newPos);
+    // await linksServices.updateLink(reorderedArray);
+    setLinkList(newArray);
+  };
+
+  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor));
 
   useEffect(() => {
     getAllLinks();
   }, []);
+  console.log(linkList);
   return (
     <>
       <NavBarSkeleton>
@@ -145,24 +155,45 @@ const Admin = () => {
                 sensors={sensors}
               >
                 <SortableContext
-                  items={linkList as []}
+                  items={linkList}
                   strategy={verticalListSortingStrategy}
                 >
-                  {linkList
-                    .sort((a, b) => a.list_order - b.list_order)
-                    .map((link) => {
-                      return (
-                        <LinkElement link={link} id={link.id} key={link.id} />
-                      );
-                    })}
+                  {linkList.map((link) => {
+                    return (
+                      <LinkElement link={link} id={link.id} key={link.id} />
+                    );
+                  })}
                 </SortableContext>
               </DndContext>
             </div>
           </div>
         </div>
         <div className="bg-gray-100 hidden md:w-1/3 md:flex md:flex-col md:justify-center md:items-center">
-          <div className="bg-black aspect-9/16 min-w-52 w-3/5 rounded"></div>
+          <div className="flex flex-col bg-black aspect-9/16 min-w-52 w-3/5 rounded-3xl items-center">
+            {linkList.map((link) => {
+              return (
+                <div className="bg-white rounded-full w-full text-center p-3">
+                  {link.link}
+                </div>
+              );
+            })}
+          </div>
         </div>
+      </div>
+      <div className="fixed z-30 inset-x-0 bottom-0 w-full mb-3 flex visible md:hidden ">
+        <button
+          onClick={() => setMobileDrawer((prevState) => !prevState)}
+          className="bg-slate-200 rounded-full p-3 m-auto flex flex-row gap-x-1"
+        >
+          {mobileDrawer ? (
+            <CancelIcon />
+          ) : (
+            <>
+              <VisibilityIcon />
+              Preview
+            </>
+          )}
+        </button>
       </div>
     </>
   );

@@ -151,7 +151,6 @@ export const protect = catchAsync(
     // 1. Verify token, 2. Check if user still exists, 3. Check if password has changed
 
     jwt.verify(token, ACCESS_TOKEN_SECRET, async (err, payload) => {
-      console.log(req.headers);
       if (err) return next(new AppError("Invalid tokens", 401));
       existingUser = await prisma.user.findUnique({
         where: {
