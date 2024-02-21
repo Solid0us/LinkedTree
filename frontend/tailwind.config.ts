@@ -30,9 +30,23 @@ export default {
           "0%": { transform: "scale(.90)", backgroundColor: "#C571F3" },
           "100%": { transform: "scale(1)", backgroundColor: "#FFFFFF" },
         },
+        "drawer-up": {
+          "0%": { transform: "translateY(50%)", opacity: 0 },
+          "100%": { transform: "translateY(0%)", opacity: 1 },
+        },
+        "drawer-down": {
+          "0%": { transform: "translateY(0%)", opacity: 0 },
+          "100%": {
+            transform: "translateY(100%)",
+            opacity: 1,
+            "animation-fill-mode": "forwards",
+          },
+        },
       },
       animation: {
         "pop-in": "pop-in 100ms linear ",
+        "drawer-up": "drawer-up 500ms ease-in forwards",
+        "drawer-down": "drawer-down 500ms ease-in forwards",
       },
     },
   },

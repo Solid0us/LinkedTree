@@ -7,6 +7,7 @@ interface CreateLinkBody extends Request {
   body: {
     user: VerifiedUser;
     link: string;
+    list_order: number;
   };
 }
 
@@ -34,11 +35,12 @@ export const getAllLinksByUserID = catchAsync(
 
 export const createLink = catchAsync(
   async (req: CreateLinkBody, res: Response, next: NextFunction) => {
-    const { user, link } = req.body;
+    const { user, link, list_order } = req.body;
     const createdLink = await prisma.links.create({
       data: {
         user_id: user.id,
         link,
+        list_order,
       },
     });
     res.status(200).json({
